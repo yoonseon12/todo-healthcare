@@ -1,9 +1,8 @@
 package com.healthcare.todohealthcare.entitiy;
 
 import com.healthcare.todohealthcare.entitiy.audit.BaseEntity;
-import com.healthcare.todohealthcare.entitiy.code.DepartmentCode;
-import com.healthcare.todohealthcare.entitiy.code.TypeCode;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
@@ -14,6 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
 @Table(name ="visit")
 public class Visit extends BaseEntity {
     @Id
@@ -30,15 +30,13 @@ public class Visit extends BaseEntity {
     @Comment("방문상태코드")
     private String visitStateCode;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "department_code", columnDefinition = "varchar", length = 10)
     @Comment("진료과목코드")
-    private DepartmentCode departmentCode;
+    private String departmentCode;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type_code", columnDefinition = "varchar", length = 10)
     @Comment("진료유형코드")
-    private TypeCode typeCode;
+    private String typeCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")

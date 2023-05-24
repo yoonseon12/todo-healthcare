@@ -1,9 +1,7 @@
 package com.healthcare.todohealthcare.service;
 
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientResponse;
-import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientResponse;
+import com.healthcare.todohealthcare.entitiy.Patient;
+import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +10,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional(readOnly = true)
@@ -23,6 +24,7 @@ class PatientSeriviceTest {
     private PatientSerivice patientSerivice;
     @Autowired
     private PatientRepository patientRepository;
+
     @Test
     @DisplayName("환자를 생성한다.")
     @Transactional
@@ -53,5 +55,20 @@ class PatientSeriviceTest {
                 .isEqualTo(updatedPatient.getName());
         assertThat(patientRepository.findById(savedPatient.getId()).get().getGender())
                 .isEqualTo(updatedPatient.getGender());
+    }
+
+    @Test
+    @DisplayName("환자를 삭제한다.")
+    @Transactional
+    void deletePatient() {
+        // given
+        CreatePatientRequest createPatientRequest =
+                new CreatePatientRequest("환자A","남","1996-11-27","010-1234-5678",1L);
+        CreatePatientResponse savedPatient = patientSerivice.create(createPatientRequest);
+        // when
+        patientSerivice.delete(savedPatient.getId());
+        // then
+        Optional<Patient> deletedPatient = patientRepository.findById(savedPatient.getId());
+        assertTrue(deletedPatient.isEmpty());
     }
 }

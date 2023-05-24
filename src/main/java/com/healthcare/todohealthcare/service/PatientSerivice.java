@@ -2,10 +2,7 @@ package com.healthcare.todohealthcare.service;
 
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientResponse;
-import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientResponse;
+import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.repository.HospitalRepository;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +51,13 @@ public class PatientSerivice {
         findPatient.changePatient(toEntity);
 
         return UpdatePatientResponse.toDTO(findPatient);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Patient findPatient = patientRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 환자 정보가 없습니다."));
+        patientRepository.delete(findPatient);
     }
 
 }

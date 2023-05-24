@@ -9,19 +9,21 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatePatientRequest {
+public class UpdatePatientRequest {
+    private Long id;
     private String name;
     private String gender;
     private String birth;
     private String phone;
     private Long hospitalId;
-    public Patient toEntity(CreatePatientRequest createPatientRequest, Hospital hospital) {
-        return Patient.of(null,
-                createPatientRequest.name,
+
+    public Patient toEntity(UpdatePatientRequest updatePatientRequest, Hospital hospital) {
+        return Patient.of(updatePatientRequest.id,
+                updatePatientRequest.name,
                 null,
-                createPatientRequest.gender,
-                createPatientRequest.birth,
-                createPatientRequest.phone,
+                updatePatientRequest.gender,
+                updatePatientRequest.birth,
+                updatePatientRequest.phone,
                 hospital);
     }
 }

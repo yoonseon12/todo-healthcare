@@ -54,36 +54,42 @@ public class Patient extends BaseEntity {
     private List<Visit> visits = new ArrayList<>();
 
     @Builder
-    public Patient(String name, String registrationNo, String gender, String birth, String phone) {
+    public Patient(Long id, String name, String registrationNo, String gender, String birth, String phone, Hospital hospital) {
+        this.id = id;
         this.name = name;
         this.registrationNo = registrationNo;
         this.gender = gender;
         this.birth = birth;
         this.phone = phone;
+        this.hospital = hospital;
     }
 
-    public static Patient of(String name, String registrationNo,String gender, String birth, String phone) {
+    public static Patient of(Long id, String name, String registrationNo,String gender, String birth, String phone, Hospital hospital) {
         return Patient.builder()
+                .id(id)
                 .name(name)
                 .registrationNo(registrationNo)
                 .gender(gender)
                 .phone(phone)
                 .birth(birth)
+                .hospital(hospital)
                 .build();
     }
 
     public Patient addPatientByhosplitalInfo(int count, Hospital hospital) {
-        Patient patientInfo = createRegistrationNo(count);
+        Patient patientInfo = createRegistrationNo(hospital.getCareCenterNo(), count);
         patientInfo.setHospital(hospital);
 
         return patientInfo;
     }
 
     // 환자등록번호 생성
-    public Patient createRegistrationNo(int count) {
+    // 환자등록번호 = 현재년도 + 병원의 요양기관번호 2자리 + 해당병원의 환자수+1
+    public Patient createRegistrationNo(String careCenterNo, int count) {
         StringBuilder sb = new StringBuilder();
         sb.append(LocalDate.now().getYear());
-        sb.append(String.format("%06d", count+1));
+        sb.append(String.format("%2s", careCenterNo).replaceAll(" ","0"));
+        sb.append(String.format("%04d", count+1));
         setRegistrationNo(String.valueOf(sb));
 
         return this;
@@ -101,8 +107,17 @@ public class Patient extends BaseEntity {
         if (this.name.equals(patient.name) &&
             this.birth.equals(patient.birth) &&
             this.gender.equals(patient.gender) &&
-            this.phone.equals(patient.phone)) {
-            throw new IllegalArgumentException("중복된 환자가 존재합니다.");
+            this.phone.equals(patient.phone) &&
+            this.hospital.getId() == patient.hospital.getId()) {
+            throw new IllegalArgumentException("병원 내 중복된 환자가 존재합니다.");
         }
+    }
+
+    public void changePatient(Patient patient) {
+        this.name   = patient.name;
+        this.phone  = patient.phone;
+        this.birth  = patient.birth;
+        this.gender = patient.gender;
+        this.hospital = patient.hospital;
     }
 }

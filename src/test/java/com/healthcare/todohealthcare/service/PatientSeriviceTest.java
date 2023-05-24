@@ -1,21 +1,28 @@
 package com.healthcare.todohealthcare.service;
 
 import com.healthcare.todohealthcare.entitiy.dto.CreatePatientRequest;
+import com.healthcare.todohealthcare.entitiy.dto.CreatePatientResponse;
+import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientRequest;
+import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientResponse;
+import com.healthcare.todohealthcare.repository.PatientRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 @SpringBootTest
 @Transactional(readOnly = true)
-
+@Rollback(false)
 class PatientSeriviceTest {
     @Autowired
     private PatientSerivice patientSerivice;
-
+    @Autowired
+    private PatientRepository patientRepository;
     @Test
     @DisplayName("환자를 생성한다.")
     @Transactional
@@ -27,5 +34,24 @@ class PatientSeriviceTest {
 
         // then
         assertThatCode(() -> patientSerivice.create(createPatientRequest)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("환자 정보를 수정한다.")
+    @Transactional
+    void updatePatient() {
+        // given
+        CreatePatientRequest createPatientRequest =
+                new CreatePatientRequest("환자A","M","1996-11-27","010-1234-5678",1L);
+        CreatePatientResponse savedPatient = patientSerivice.create(createPatientRequest);
+        UpdatePatientRequest updatePatientRequest =
+                new UpdatePatientRequest(savedPatient.getId(), "이름수정","F","1996-11-27","010-1234-5678",2L);
+        // when
+        UpdatePatientResponse updatedPatient = patientSerivice.update(updatePatientRequest);
+        // then
+        assertThat(patientRepository.findById(savedPatient.getId()).get().getName())
+                .isEqualTo(updatedPatient.getName());
+        assertThat(patientRepository.findById(savedPatient.getId()).get().getGender())
+                .isEqualTo(updatedPatient.getGender());
     }
 }

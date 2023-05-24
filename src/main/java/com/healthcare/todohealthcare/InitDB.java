@@ -82,12 +82,12 @@ public class InitDB {
         public void initHospital() {
             Hospital hospital1 = Hospital.builder()
                     .name("A병원")
-                    .careCenterNo("11111")
+                    .careCenterNo("01")
                     .director("A병원장")
                     .build();
             Hospital hospital2 = Hospital.builder()
                     .name("B병원")
-                    .careCenterNo("22222")
+                    .careCenterNo("02")
                     .director("B병원장")
                     .build();
             em.persist(hospital1);

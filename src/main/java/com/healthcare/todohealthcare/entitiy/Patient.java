@@ -58,8 +58,7 @@ public class Patient extends BaseEntity {
     private List<Visit> visits = new ArrayList<>();
 
     @Builder
-    public Patient(Long id, String name, String registrationNo, String gender, String birth, String phone, Hospital hospital) {
-        this.id = id;
+    public Patient(String name, String registrationNo, String gender, String birth, String phone, Hospital hospital) {
         this.name = name;
         this.registrationNo = registrationNo;
         this.gender = gender;
@@ -68,9 +67,8 @@ public class Patient extends BaseEntity {
         this.hospital = hospital;
     }
 
-    public static Patient of(Long id, String name, String registrationNo,String gender, String birth, String phone, Hospital hospital) {
+    public static Patient of(String name, String registrationNo,String gender, String birth, String phone, Hospital hospital) {
         return Patient.builder()
-                .id(id)
                 .name(name)
                 .registrationNo(registrationNo)
                 .gender(gender)
@@ -123,5 +121,9 @@ public class Patient extends BaseEntity {
         this.birth  = patient.birth;
         this.gender = patient.gender;
         this.hospital = patient.hospital;
+    }
+
+    public void changeLastVisitDate() {
+        this.lastVisitDate = LocalDateTime.now();
     }
 }

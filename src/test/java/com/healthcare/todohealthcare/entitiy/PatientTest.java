@@ -16,8 +16,8 @@ class PatientTest {
         int countByhospitalC = 1234;
         Hospital hospitalD = new Hospital("병원D","12","D병원장");
         int countByhospitalD = 1234;
-        Patient patientA = Patient.of(null, "환자", null, "M", "1990-01-01", "010-1234-5678", hospitalC);
-        Patient patientB = Patient.of(null, "환자", null, "M", "1990-01-01", "010-1234-5678", hospitalD);
+        Patient patientA = Patient.of("환자", null, "M", "1990-01-01", "010-1234-5678", hospitalC);
+        Patient patientB = Patient.of("환자", null, "M", "1990-01-01", "010-1234-5678", hospitalD);
 
         // when
         Patient result1 = patientA.createRegistrationNo(hospitalC.getCareCenterNo(), countByhospitalC);
@@ -34,9 +34,9 @@ class PatientTest {
         // given
         Hospital hospital = new Hospital("병원C","11","C병원장");
         Patient patient1 =
-                Patient.of(null, "환자", null, "M", "1990-01-01", "010-1234-5678", hospital);
+                Patient.of("환자", null, "M", "1990-01-01", "010-1234-5678", hospital);
         Patient patient2 =
-                Patient.of(null, "환자", null, "M", "1990-01-01", "010-1234-5678", hospital);
+                Patient.of("환자", null, "M", "1990-01-01", "010-1234-5678", hospital);
         // when
 
         // then

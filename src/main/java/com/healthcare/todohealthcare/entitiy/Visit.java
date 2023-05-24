@@ -1,11 +1,9 @@
 package com.healthcare.todohealthcare.entitiy;
 
 import com.healthcare.todohealthcare.entitiy.audit.BaseEntity;
-import lombok.AccessLevel;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,6 +20,7 @@ public class Visit extends BaseEntity {
     @Comment("환자방문ID")
     private Long id;
 
+    @CreatedDate
     @Column(name = "reception_date", columnDefinition = "datetime")
     @Comment("접수일시")
     private LocalDateTime receptionDate;
@@ -46,4 +45,30 @@ public class Visit extends BaseEntity {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
+    @Builder
+    public Visit(String visitStateCode, String departmentCode, String typeCode, Hospital hospital, Patient patient) {
+        this.visitStateCode = visitStateCode;
+        this.departmentCode = departmentCode;
+        this.typeCode = typeCode;
+        this.hospital = hospital;
+        this.patient = patient;
+    }
+
+    public static Visit of(String visitStateCode, String departmentCode, String typeCode, Hospital hospital, Patient patient) {
+        return Visit.builder()
+                .visitStateCode(visitStateCode)
+                .departmentCode(departmentCode)
+                .typeCode(typeCode)
+                .hospital(hospital)
+                .patient(patient)
+                .build();
+    }
+
+    public void changeVisit(Visit visit) {
+        this.visitStateCode = visit.getVisitStateCode();
+        this.departmentCode = visit.getDepartmentCode();
+        this.typeCode = visit.getTypeCode();
+        this.hospital = visit.getHospital();
+        this.patient = visit.getPatient();
+    }
 }

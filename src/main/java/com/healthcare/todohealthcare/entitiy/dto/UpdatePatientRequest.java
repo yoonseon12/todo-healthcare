@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdatePatientRequest {
-    private Long id;
     private String name;
     private String gender;
     private String birth;
@@ -18,8 +17,7 @@ public class UpdatePatientRequest {
     private Long hospitalId;
 
     public Patient toEntity(UpdatePatientRequest updatePatientRequest, Hospital hospital) {
-        return Patient.of(updatePatientRequest.id,
-                updatePatientRequest.name,
+        return Patient.of(updatePatientRequest.name,
                 null,
                 updatePatientRequest.gender,
                 updatePatientRequest.birth,

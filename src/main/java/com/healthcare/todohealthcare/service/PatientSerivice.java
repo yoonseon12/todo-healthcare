@@ -40,10 +40,10 @@ public class PatientSerivice {
     }
 
     @Transactional
-    public UpdatePatientResponse update(UpdatePatientRequest updatePatientRequest) {
+    public UpdatePatientResponse update(Long id, UpdatePatientRequest updatePatientRequest) {
         Hospital hospital = hospitalRepository.findById(updatePatientRequest.getHospitalId())
                 .orElseThrow(() -> new IllegalArgumentException("병원 정보가 없습니다."));
-        Patient findPatient = patientRepository.findById(updatePatientRequest.getId())
+        Patient findPatient = patientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 환자 정보가 없습니다."));
         Patient toEntity = updatePatientRequest.toEntity(updatePatientRequest, hospital);
         isDuplicatedPatient(toEntity);

@@ -47,9 +47,9 @@ class PatientSeriviceTest {
                 new CreatePatientRequest("환자A","M","1996-11-27","010-1234-5678",1L);
         CreatePatientResponse savedPatient = patientSerivice.create(createPatientRequest);
         UpdatePatientRequest updatePatientRequest =
-                new UpdatePatientRequest(savedPatient.getId(), "이름수정","F","1996-11-27","010-1234-5678",2L);
+                new UpdatePatientRequest("이름수정","F","1996-11-27","010-1234-5678",2L);
         // when
-        UpdatePatientResponse updatedPatient = patientSerivice.update(updatePatientRequest);
+        UpdatePatientResponse updatedPatient = patientSerivice.update(savedPatient.getId(), updatePatientRequest);
         // then
         assertThat(patientRepository.findById(savedPatient.getId()).get().getName())
                 .isEqualTo(updatedPatient.getName());

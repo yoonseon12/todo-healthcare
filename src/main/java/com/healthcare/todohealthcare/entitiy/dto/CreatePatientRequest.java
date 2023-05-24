@@ -16,8 +16,7 @@ public class CreatePatientRequest {
     private String phone;
     private Long hospitalId;
     public Patient toEntity(CreatePatientRequest createPatientRequest, Hospital hospital) {
-        return Patient.of(null,
-                createPatientRequest.name,
+        return Patient.of(createPatientRequest.name,
                 null,
                 createPatientRequest.gender,
                 createPatientRequest.birth,

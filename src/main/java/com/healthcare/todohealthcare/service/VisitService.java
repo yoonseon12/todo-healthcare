@@ -3,16 +3,15 @@ package com.healthcare.todohealthcare.service;
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import com.healthcare.todohealthcare.entitiy.Visit;
-import com.healthcare.todohealthcare.entitiy.dto.CreateVisitRequest;
-import com.healthcare.todohealthcare.entitiy.dto.CreateVisitResponse;
-import com.healthcare.todohealthcare.entitiy.dto.UpdateVisitRequest;
-import com.healthcare.todohealthcare.entitiy.dto.UpdateVisitResponse;
+import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.repository.HospitalRepository;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import com.healthcare.todohealthcare.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLOutput;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +49,18 @@ public class VisitService {
         findVisit.changeVisit(toEntity);
 
         return UpdateVisitResponse.toDTO(findVisit);
+    }
+
+    public FindVisitResponse find(Long id){
+        Visit findVisit = visitRepository.findVisitWithHospitalAndPatient(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 방문 정보가 없습니다."));
+        return FindVisitResponse.toDTO(findVisit);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Visit findVisit = visitRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 방문 정보가 없습니다."));
+        visitRepository.delete(findVisit);
     }
 }

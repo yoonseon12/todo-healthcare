@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
+@ToString(exclude = {"visits"})
 @Where(clause = "deleted_date is null")
 @SQLDelete(sql = "update patient set deleted_date = now() where id = ?")
 @Table(name = "patient")

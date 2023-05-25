@@ -3,6 +3,8 @@ package com.healthcare.todohealthcare.entitiy;
 import com.healthcare.todohealthcare.entitiy.audit.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -12,6 +14,9 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
+@ToString
+@Where(clause = "deleted_date is null")
+@SQLDelete(sql = "update visit set deleted_date = now() where id = ?")
 @Table(name ="visit")
 public class Visit extends BaseEntity {
     @Id

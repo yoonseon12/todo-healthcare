@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @EqualsAndHashCode
+@ToString(exclude = {"patients", "visits"})
 @Table(name = "hospital")
 public class Hospital extends BaseEntity {
     @Id

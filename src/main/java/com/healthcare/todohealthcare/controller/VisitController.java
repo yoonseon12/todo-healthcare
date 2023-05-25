@@ -20,4 +20,14 @@ public class VisitController {
     public UpdateVisitResponse update(@PathVariable Long id, @RequestBody UpdateVisitRequest updateVisitRequest) {
         return visitService.update(id, updateVisitRequest);
     }
+
+    @GetMapping("/find/{id}")
+    public FindVisitResponse find(@PathVariable Long id) {
+        return visitService.find(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable Long id) {
+        visitService.delete(id);
+    }
 }

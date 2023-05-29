@@ -1,4 +1,4 @@
-package com.healthcare.todohealthcare.entitiy.dto.entityCommonDto;
+package com.healthcare.todohealthcare.dto.entityCommonDto;
 
 import com.healthcare.todohealthcare.entitiy.Visit;
 import lombok.AllArgsConstructor;

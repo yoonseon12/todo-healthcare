@@ -1,9 +1,9 @@
 package com.healthcare.todohealthcare.service;
 
+import com.healthcare.todohealthcare.dto.*;
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import com.healthcare.todohealthcare.entitiy.Visit;
-import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.repository.HospitalRepository;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import com.healthcare.todohealthcare.repository.VisitRepository;
@@ -32,7 +32,7 @@ public class VisitService {
 
         Visit visit = visitRepository.save(toEntity);
 
-        findPatient.changeLastVisitDate(); // 환자의 최근 방문일시 업데이트
+        findPatient.changeLastVisitDate();
 
         return CreateVisitResponse.toDTO(visit);
     }

@@ -1,8 +1,8 @@
 package com.healthcare.todohealthcare.service;
 
+import com.healthcare.todohealthcare.dto.*;
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
-import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.repository.HospitalRepository;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,11 +66,8 @@ public class PatientSerivice {
         return FindPatientResponse.toDTO(findPatient);
     }
 
-    public List<FindAllPatientResponse> findAll() {
+    public FindAllPatientResponse findAll() {
         List<Patient> patients = patientRepository.findAll();
-        List<FindAllPatientResponse> result = patients.stream()
-                .map(p -> FindAllPatientResponse.toDTO(p))
-                .collect(Collectors.toList());
-        return result;
+        return FindAllPatientResponse.toDTO(patients);
     }
 }

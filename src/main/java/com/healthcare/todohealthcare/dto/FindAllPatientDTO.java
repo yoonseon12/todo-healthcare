@@ -1,11 +1,8 @@
-package com.healthcare.todohealthcare.entitiy.dto;
+package com.healthcare.todohealthcare.dto;
 
 
 import com.healthcare.todohealthcare.entitiy.Patient;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class FindAllPatientResponse {
+public class FindAllPatientDTO {
     private Long id;
     private String name;
     private String registrationNo;
@@ -22,8 +19,8 @@ public class FindAllPatientResponse {
     private String phone;
     private LocalDateTime lastVisitDate;
 
-    public static FindAllPatientResponse toDTO(Patient patient) {
-        return FindAllPatientResponse.builder()
+    public static FindAllPatientDTO toDTO(Patient patient) {
+        return FindAllPatientDTO.builder()
                 .id(patient.getId())
                 .name(patient.getName())
                 .registrationNo(patient.getRegistrationNo())

@@ -1,8 +1,8 @@
-package com.healthcare.todohealthcare.entitiy.dto;
+package com.healthcare.todohealthcare.dto;
 
+import com.healthcare.todohealthcare.dto.entityCommonDto.HospitalResponseDTO;
 import com.healthcare.todohealthcare.entitiy.Visit;
-import com.healthcare.todohealthcare.entitiy.dto.entityCommonDto.HospitalResponseDTO;
-import com.healthcare.todohealthcare.entitiy.dto.entityCommonDto.PatientResponseDTO;
+import com.healthcare.todohealthcare.dto.entityCommonDto.PatientResponseDTO;
 import lombok.*;
 
 @Getter

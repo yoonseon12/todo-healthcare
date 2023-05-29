@@ -1,4 +1,4 @@
-package com.healthcare.todohealthcare.entitiy.dto;
+package com.healthcare.todohealthcare.dto.entityCommonDto;
 
 import com.healthcare.todohealthcare.entitiy.Patient;
 import lombok.AllArgsConstructor;
@@ -10,20 +10,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UpdatePatientResponse {
+public class PatientResponseDTO {
     private String name;
     private String gender;
     private String birth;
     private String phone;
-    private Long hospitalId;
 
-    public static UpdatePatientResponse toDTO(Patient patient) {
-        return UpdatePatientResponse.builder()
+    public static PatientResponseDTO toDTO(Patient patient) {
+        return PatientResponseDTO.builder()
                 .name(patient.getName())
                 .gender(patient.getGender())
                 .birth(patient.getBirth())
                 .phone(patient.getPhone())
-                .hospitalId(patient.getHospital().getId())
                 .build();
     }
 }

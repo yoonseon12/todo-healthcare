@@ -1,32 +1,33 @@
 package com.healthcare.todohealthcare.controller;
 
-import com.healthcare.todohealthcare.entitiy.dto.*;
+import com.healthcare.todohealthcare.dto.*;
+import com.healthcare.todohealthcare.dto.commenResponse.CommonResponse;
 import com.healthcare.todohealthcare.service.VisitService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/visit")
+@RequestMapping("/api/visits")
 public class VisitController {
     private final VisitService visitService;
 
-    @PostMapping("/create")
-    public CreateVisitResponse create(@RequestBody CreateVisitRequest createVisitRequest) {
-        return visitService.create(createVisitRequest);
+    @PostMapping
+    public CommonResponse<CreateVisitResponse> create(@RequestBody CreateVisitRequest createVisitRequest) {
+        return CommonResponse.of(visitService.create(createVisitRequest));
     }
 
-    @PutMapping("/update/{id}")
-    public UpdateVisitResponse update(@PathVariable Long id, @RequestBody UpdateVisitRequest updateVisitRequest) {
-        return visitService.update(id, updateVisitRequest);
+    @PutMapping("/{id}")
+    public CommonResponse<UpdateVisitResponse> update(@PathVariable Long id, @RequestBody UpdateVisitRequest updateVisitRequest) {
+        return CommonResponse.of(visitService.update(id, updateVisitRequest));
     }
 
-    @GetMapping("/find/{id}")
-    public FindVisitResponse find(@PathVariable Long id) {
-        return visitService.find(id);
+    @GetMapping("/{id}")
+    public CommonResponse<FindVisitResponse> find(@PathVariable Long id) {
+        return CommonResponse.of(visitService.find(id));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         visitService.delete(id);
     }

@@ -1,8 +1,8 @@
-package com.healthcare.todohealthcare.entitiy.dto;
+package com.healthcare.todohealthcare.dto;
 
+import com.healthcare.todohealthcare.dto.entityCommonDto.HospitalResponseDTO;
+import com.healthcare.todohealthcare.dto.entityCommonDto.VisitResponseDTO;
 import com.healthcare.todohealthcare.entitiy.Patient;
-import com.healthcare.todohealthcare.entitiy.dto.entityCommonDto.HospitalResponseDTO;
-import com.healthcare.todohealthcare.entitiy.dto.entityCommonDto.VisitResponseDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;

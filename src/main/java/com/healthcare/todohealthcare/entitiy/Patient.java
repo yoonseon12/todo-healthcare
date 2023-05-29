@@ -113,7 +113,6 @@ public class Patient extends BaseEntity {
             this.phone.equals(patient.phone) &&
             this.hospital.getId().equals(patient.hospital.getId())) {
             throw new IllegalArgumentException("병원 내 중복된 환자가 존재합니다.");
-
         }
     }
 

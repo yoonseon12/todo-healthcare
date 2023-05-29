@@ -1,9 +1,9 @@
 package com.healthcare.todohealthcare.repository;
 
 import com.healthcare.todohealthcare.entitiy.Patient;
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientResponse;
-import com.healthcare.todohealthcare.entitiy.dto.FindPatientResponse;
+import com.healthcare.todohealthcare.dto.CreatePatientRequest;
+import com.healthcare.todohealthcare.dto.CreatePatientResponse;
+import com.healthcare.todohealthcare.dto.FindPatientResponse;
 import com.healthcare.todohealthcare.service.PatientSerivice;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,9 +29,9 @@ class PatientRepositoryTest {
     void findPatientByHospitalIdAndPatientId(){
         // given
         CreatePatientRequest patientByHospitalA =
-                new CreatePatientRequest("환자A","남","1996-11-27","010-1234-5678",1L);
+                new CreatePatientRequest("환자A", "남", "1996-11-27", "010-1234-5678", 1L);
         CreatePatientRequest patientByHospitalB =
-                new CreatePatientRequest("환자B","남","1999-12-12","010-1234-5678",2L);
+                new CreatePatientRequest("환자B", "남", "1999-12-12", "010-1234-5678", 2L);
         CreatePatientResponse savedPatientA = patientSerivice.create(patientByHospitalA);
         CreatePatientResponse savedPatientB = patientSerivice.create(patientByHospitalB);
         FindPatientResponse findPatientA = patientSerivice.find(savedPatientA.getId());

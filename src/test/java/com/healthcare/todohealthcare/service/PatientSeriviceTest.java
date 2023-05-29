@@ -1,7 +1,7 @@
 package com.healthcare.todohealthcare.service;
 
+import com.healthcare.todohealthcare.dto.*;
 import com.healthcare.todohealthcare.entitiy.Patient;
-import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -106,8 +105,8 @@ class PatientSeriviceTest {
         patientSerivice.create(PatientD);
         patientSerivice.create(PatientE);
         // when
-        List<FindAllPatientResponse> patients = patientSerivice.findAll();
+        FindAllPatientResponse result = patientSerivice.findAll();
         // then
-        assertThat(patients.size()).isEqualTo(5);
+        assertThat(result.getPatients().size()).isEqualTo(5);
     }
 }

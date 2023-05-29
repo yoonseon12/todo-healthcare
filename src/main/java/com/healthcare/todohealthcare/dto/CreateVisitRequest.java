@@ -1,4 +1,4 @@
-package com.healthcare.todohealthcare.entitiy.dto;
+package com.healthcare.todohealthcare.dto;
 
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
@@ -10,19 +10,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateVisitRequest {
+public class CreateVisitRequest {
     private String visitStateCode;
     private String departmentCode;
     private String typeCode;
     private Long hospitalId;
     private Long patientId;
 
-    public Visit toEntity(UpdateVisitRequest updateVisitRequest, Hospital hospital, Patient patient) {
+    public Visit toEntity(CreateVisitRequest createVisitRequest, Hospital hospital, Patient patient) {
         return Visit.of(
-                updateVisitRequest.visitStateCode,
-                updateVisitRequest.departmentCode,
-                updateVisitRequest.typeCode,
+                createVisitRequest.visitStateCode,
+                createVisitRequest.departmentCode,
+                createVisitRequest.typeCode,
                 hospital,
                 patient);
     }
+
 }

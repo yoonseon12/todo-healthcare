@@ -40,7 +40,8 @@ public class Hospital extends BaseEntity {
     private List<Visit> visits = new ArrayList<>();
 
     @Builder
-    public Hospital(String name, String careCenterNo, String director) {
+    public Hospital(Long id, String name, String careCenterNo, String director) {
+        this.id = id;
         this.name = name;
         this.careCenterNo = careCenterNo;
         this.director = director;

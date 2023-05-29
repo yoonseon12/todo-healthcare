@@ -22,7 +22,7 @@ public class FindVisitResponse {
                 .visitStateCode(visit.getVisitStateCode())
                 .departmentCode(visit.getDepartmentCode())
                 .typeCode(visit.getTypeCode())
-                .hospital(HospitalResponseDTO.toDto(visit.getHospital()))
+                .hospital(HospitalResponseDTO.toDTO(visit.getHospital()))
                 .patient(PatientResponseDTO.toDTO(visit.getPatient()))
                 .build();
     }

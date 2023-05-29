@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -60,4 +61,17 @@ public class PatientSerivice {
         patientRepository.delete(findPatient);
     }
 
+    public FindPatientResponse find(Long id) {
+        Patient findPatient = patientRepository.findPatientWithHospitalWithVisitById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 환자 정보가 없습니다."));
+        return FindPatientResponse.toDTO(findPatient);
+    }
+
+    public List<FindAllPatientResponse> findAll() {
+        List<Patient> patients = patientRepository.findAll();
+        List<FindAllPatientResponse> result = patients.stream()
+                .map(p -> FindAllPatientResponse.toDTO(p))
+                .collect(Collectors.toList());
+        return result;
+    }
 }

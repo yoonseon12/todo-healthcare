@@ -10,5 +10,5 @@ import java.util.Optional;
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
     @Query("SELECT v FROM Visit v JOIN FETCH v.hospital JOIN FETCH v.patient WHERE v.id= :id")
-    Optional<Visit> findVisitWithHospitalAndPatient(@Param("id") Long id);
+    Optional<Visit> findVisitWithHospitalWithPatientById(@Param("id") Long id);
 }

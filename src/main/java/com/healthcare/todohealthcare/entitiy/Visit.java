@@ -73,7 +73,17 @@ public class Visit extends BaseEntity {
         this.visitStateCode = visit.getVisitStateCode();
         this.departmentCode = visit.getDepartmentCode();
         this.typeCode = visit.getTypeCode();
-        this.hospital = visit.getHospital();
-        this.patient = visit.getPatient();
+        changeHosptial(visit.getHospital());
+        changePatient(visit.getPatient());
+    }
+
+    private void changeHosptial(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getVisits().add(this);
+    }
+
+    private void changePatient(Patient patient) {
+        this.patient = patient;
+        patient.getVisits().add(this);
     }
 }

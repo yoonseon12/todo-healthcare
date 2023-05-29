@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class HospitalResponseDTO {
+    private Long id;
     private String name;
     private String careCenterNo;
     private String director;
 
-    public static HospitalResponseDTO toDto(Hospital hospital) {
+    public static HospitalResponseDTO toDTO(Hospital hospital) {
         return HospitalResponseDTO.builder()
+                .id(hospital.getId())
                 .name(hospital.getName())
                 .careCenterNo(hospital.getCareCenterNo())
                 .director(hospital.getDirector())

@@ -1,12 +1,11 @@
 package com.healthcare.todohealthcare.controller;
 
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.CreatePatientResponse;
-import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientRequest;
-import com.healthcare.todohealthcare.entitiy.dto.UpdatePatientResponse;
+import com.healthcare.todohealthcare.entitiy.dto.*;
 import com.healthcare.todohealthcare.service.PatientSerivice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,5 +26,15 @@ public class PatientController {
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable Long id) {
         patientSerivice.delete(id);
+    }
+
+    @GetMapping("/find/{id}")
+    public FindPatientResponse find(@PathVariable Long id) {
+        return patientSerivice.find(id);
+    }
+
+    @GetMapping("/findAll")
+    public List<FindAllPatientResponse> find() {
+        return patientSerivice.findAll();
     }
 }

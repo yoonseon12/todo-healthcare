@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +32,7 @@ class PatientSeriviceTest {
     void createPatient() {
         // given
         CreatePatientRequest createPatientRequest =
-                new CreatePatientRequest("환자A","남","1996-11-27","010-1234-5678",1L);
+                new CreatePatientRequest("환자Z","남","1996-11-27","010-1234-5678",1L);
         // when
 
         // then
@@ -44,7 +45,7 @@ class PatientSeriviceTest {
     void updatePatient() {
         // given
         CreatePatientRequest createPatientRequest =
-                new CreatePatientRequest("환자A","M","1996-11-27","010-1234-5678",1L);
+                new CreatePatientRequest("환자T","M","1996-11-27","010-1234-5678",1L);
         CreatePatientResponse savedPatient = patientSerivice.create(createPatientRequest);
         UpdatePatientRequest updatePatientRequest =
                 new UpdatePatientRequest("이름수정","F","1996-11-27","010-1234-5678",2L);
@@ -70,5 +71,43 @@ class PatientSeriviceTest {
         // then
         Optional<Patient> deletedPatient = patientRepository.findById(savedPatient.getId());
         assertTrue(deletedPatient.isEmpty());
+    }
+
+    @Test
+    @DisplayName("환자 정보를 조회한다.")
+    void find() {
+        // given
+        CreatePatientRequest createPatientRequest =
+                new CreatePatientRequest("환자A","남","1996-11-27","010-1234-5678",1L);
+        CreatePatientResponse savedPatient = patientSerivice.create(createPatientRequest);
+        // when
+        FindPatientResponse findPatientA = patientSerivice.find(savedPatient.getId());
+        // then
+        assertThat(findPatientA).isNotNull();
+    }
+
+    @Test
+    @DisplayName("전체 환자 정보 조회")
+    void findAll() {
+        // given
+        CreatePatientRequest PatientA =
+                new CreatePatientRequest("환자A","M","1996-11-27","010-1234-5678",1L);
+        CreatePatientRequest PatientB =
+                new CreatePatientRequest("환자B","F","1996-11-27","010-1234-5678",1L);
+        CreatePatientRequest PatientC =
+                new CreatePatientRequest("환자C","F","1996-11-27","010-1234-5678",1L);
+        CreatePatientRequest PatientD =
+                new CreatePatientRequest("환자D","F","1996-11-27","010-1234-5678",1L);
+        CreatePatientRequest PatientE =
+                new CreatePatientRequest("환자E","F","1996-11-27","010-1234-5678",1L);
+        patientSerivice.create(PatientA);
+        patientSerivice.create(PatientB);
+        patientSerivice.create(PatientC);
+        patientSerivice.create(PatientD);
+        patientSerivice.create(PatientE);
+        // when
+        List<FindAllPatientResponse> patients = patientSerivice.findAll();
+        // then
+        assertThat(patients.size()).isEqualTo(5);
     }
 }

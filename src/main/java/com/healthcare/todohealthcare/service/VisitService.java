@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLOutput;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,10 +21,13 @@ public class VisitService {
 
     @Transactional
     public CreateVisitResponse create(CreateVisitRequest createVisitRequest) {
+        Patient patient = patientRepository.findPatientByHospitalIdAndPatientId(createVisitRequest.getPatientId(), createVisitRequest.getHospitalId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 병원에 등록된 환자가 없습니다."));
         Hospital findHospital = hospitalRepository.findById(createVisitRequest.getHospitalId())
                 .orElseThrow(() -> new IllegalArgumentException("병원 정보가 없습니다."));
         Patient findPatient = patientRepository.findById(createVisitRequest.getPatientId())
                 .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 환자 정보가 없습니다."));
+
         Visit toEntity = createVisitRequest.toEntity(createVisitRequest, findHospital, findPatient);
 
         Visit visit = visitRepository.save(toEntity);
@@ -52,7 +53,7 @@ public class VisitService {
     }
 
     public FindVisitResponse find(Long id){
-        Visit findVisit = visitRepository.findVisitWithHospitalAndPatient(id)
+        Visit findVisit = visitRepository.findVisitWithHospitalWithPatientById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 방문 정보가 없습니다."));
         return FindVisitResponse.toDTO(findVisit);
     }

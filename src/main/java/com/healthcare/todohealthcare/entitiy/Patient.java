@@ -111,8 +111,9 @@ public class Patient extends BaseEntity {
             this.birth.equals(patient.birth) &&
             this.gender.equals(patient.gender) &&
             this.phone.equals(patient.phone) &&
-            this.hospital.getId() == patient.hospital.getId()) {
+            this.hospital.getId().equals(patient.hospital.getId())) {
             throw new IllegalArgumentException("병원 내 중복된 환자가 존재합니다.");
+
         }
     }
 
@@ -121,7 +122,12 @@ public class Patient extends BaseEntity {
         this.phone  = patient.phone;
         this.birth  = patient.birth;
         this.gender = patient.gender;
-        this.hospital = patient.hospital;
+        changeHospital(patient.getHospital());
+    }
+
+    private void changeHospital(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getPatients().add(this);
     }
 
     public void changeLastVisitDate() {

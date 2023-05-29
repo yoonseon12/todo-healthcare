@@ -1,12 +1,11 @@
 package com.healthcare.todohealthcare.entitiy;
 
 import com.healthcare.todohealthcare.entitiy.audit.BaseEntity;
-import com.healthcare.todohealthcare.entitiy.code.DepartmentCode;
-import com.healthcare.todohealthcare.entitiy.code.TypeCode;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +13,10 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
+@ToString
+@Where(clause = "deleted_date is null")
+@SQLDelete(sql = "update visit set deleted_date = now() where id = ?")
 @Table(name ="visit")
 public class Visit extends BaseEntity {
     @Id
@@ -22,6 +25,7 @@ public class Visit extends BaseEntity {
     @Comment("환자방문ID")
     private Long id;
 
+    @CreatedDate
     @Column(name = "reception_date", columnDefinition = "datetime")
     @Comment("접수일시")
     private LocalDateTime receptionDate;
@@ -30,15 +34,13 @@ public class Visit extends BaseEntity {
     @Comment("방문상태코드")
     private String visitStateCode;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "department_code", columnDefinition = "varchar", length = 10)
     @Comment("진료과목코드")
-    private DepartmentCode departmentCode;
+    private String departmentCode;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type_code", columnDefinition = "varchar", length = 10)
     @Comment("진료유형코드")
-    private TypeCode typeCode;
+    private String typeCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hospital_id")
@@ -48,4 +50,40 @@ public class Visit extends BaseEntity {
     @JoinColumn(name = "patient_id")
     private Patient patient;
 
+    @Builder
+    public Visit(String visitStateCode, String departmentCode, String typeCode, Hospital hospital, Patient patient) {
+        this.visitStateCode = visitStateCode;
+        this.departmentCode = departmentCode;
+        this.typeCode = typeCode;
+        this.hospital = hospital;
+        this.patient = patient;
+    }
+
+    public static Visit of(String visitStateCode, String departmentCode, String typeCode, Hospital hospital, Patient patient) {
+        return Visit.builder()
+                .visitStateCode(visitStateCode)
+                .departmentCode(departmentCode)
+                .typeCode(typeCode)
+                .hospital(hospital)
+                .patient(patient)
+                .build();
+    }
+
+    public void changeVisit(Visit visit) {
+        this.visitStateCode = visit.getVisitStateCode();
+        this.departmentCode = visit.getDepartmentCode();
+        this.typeCode = visit.getTypeCode();
+        changeHosptial(visit.getHospital());
+        changePatient(visit.getPatient());
+    }
+
+    private void changeHosptial(Hospital hospital) {
+        this.hospital = hospital;
+        hospital.getVisits().add(this);
+    }
+
+    private void changePatient(Patient patient) {
+        this.patient = patient;
+        patient.getVisits().add(this);
+    }
 }

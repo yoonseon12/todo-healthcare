@@ -1,9 +1,7 @@
 package com.healthcare.todohealthcare.entitiy;
 
 import com.healthcare.todohealthcare.entitiy.audit.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
@@ -13,6 +11,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@EqualsAndHashCode
+@ToString(exclude = {"patients", "visits"})
 @Table(name = "hospital")
 public class Hospital extends BaseEntity {
     @Id
@@ -39,4 +39,10 @@ public class Hospital extends BaseEntity {
     @OneToMany(mappedBy = "hospital")
     private List<Visit> visits = new ArrayList<>();
 
+    @Builder
+    public Hospital(String name, String careCenterNo, String director) {
+        this.name = name;
+        this.careCenterNo = careCenterNo;
+        this.director = director;
+    }
 }

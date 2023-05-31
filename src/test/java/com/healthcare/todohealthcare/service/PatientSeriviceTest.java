@@ -1,6 +1,7 @@
 package com.healthcare.todohealthcare.service;
 
 import com.healthcare.todohealthcare.dto.*;
+import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -96,17 +97,18 @@ class PatientSeriviceTest {
         CreatePatientRequest PatientC =
                 new CreatePatientRequest("환자C","F","1996-11-27","010-1234-5678",1L);
         CreatePatientRequest PatientD =
-                new CreatePatientRequest("환자D","F","1996-11-27","010-1234-5678",1L);
+                new CreatePatientRequest("환자D","F","1996-11-23","010-1234-5678",1L);
         CreatePatientRequest PatientE =
-                new CreatePatientRequest("환자E","F","1996-11-27","010-1234-5678",1L);
+                new CreatePatientRequest("환자E","F","1996-11-23","010-1234-5678",1L);
         patientSerivice.create(PatientA);
         patientSerivice.create(PatientB);
         patientSerivice.create(PatientC);
         patientSerivice.create(PatientD);
         patientSerivice.create(PatientE);
         // when
-        FindAllPatientResponse result = patientSerivice.findAll();
+        PatientSearchConditon searchConditon = new PatientSearchConditon(null, null, "1996-11-27");
+        FindAllPatientResponse result = patientSerivice.findAll(searchConditon);
         // then
-        assertThat(result.getPatients().size()).isEqualTo(5);
+        assertThat(result.getPatients().size()).isEqualTo(3);
     }
 }

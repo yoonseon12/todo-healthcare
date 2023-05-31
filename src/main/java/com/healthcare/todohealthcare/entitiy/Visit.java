@@ -3,6 +3,7 @@ package com.healthcare.todohealthcare.entitiy;
 import com.healthcare.todohealthcare.entitiy.audit.BaseEntity;
 import lombok.*;
 import org.hibernate.annotations.Comment;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @ToString
 @Where(clause = "deleted_date is null")
 @SQLDelete(sql = "update visit set deleted_date = now() where id = ?")
+@DynamicUpdate
 @Table(name ="visit")
 public class Visit extends BaseEntity {
     @Id

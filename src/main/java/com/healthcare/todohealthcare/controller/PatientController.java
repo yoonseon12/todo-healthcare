@@ -2,6 +2,7 @@ package com.healthcare.todohealthcare.controller;
 
 import com.healthcare.todohealthcare.dto.*;
 import com.healthcare.todohealthcare.dto.commenResponse.CommonResponse;
+import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
 import com.healthcare.todohealthcare.service.PatientSerivice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class PatientController {
     }
 
     @GetMapping
-    public CommonResponse<List<FindAllPatientResponse>> findAll() {
-        return CommonResponse.of(patientSerivice.findAll());
+    public CommonResponse<List<FindAllPatientResponse>> findAll(PatientSearchConditon searchConditon) {
+        return CommonResponse.of(patientSerivice.findAll(searchConditon));
     }
 }

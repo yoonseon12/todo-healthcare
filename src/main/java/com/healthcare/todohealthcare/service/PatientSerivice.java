@@ -1,6 +1,7 @@
 package com.healthcare.todohealthcare.service;
 
 import com.healthcare.todohealthcare.dto.*;
+import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import com.healthcare.todohealthcare.repository.HospitalRepository;
@@ -66,8 +67,8 @@ public class PatientSerivice {
         return FindPatientResponse.toDTO(findPatient);
     }
 
-    public FindAllPatientResponse findAll() {
-        List<Patient> patients = patientRepository.findAll();
+    public FindAllPatientResponse findAll(PatientSearchConditon searchConditon) {
+        List<Patient> patients = patientRepository.searchPatient(searchConditon);
         return FindAllPatientResponse.toDTO(patients);
     }
 }

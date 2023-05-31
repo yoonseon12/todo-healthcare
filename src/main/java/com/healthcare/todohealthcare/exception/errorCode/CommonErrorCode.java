@@ -1,4 +1,4 @@
-package com.healthcare.todohealthcare.dto.commenResponse.exception.errorCode;
+package com.healthcare.todohealthcare.exception.errorCode;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

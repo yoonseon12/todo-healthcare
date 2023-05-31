@@ -1,9 +1,9 @@
-package com.healthcare.todohealthcare.dto.commenResponse.exception.handler;
+package com.healthcare.todohealthcare.exception.handler;
 
-import com.healthcare.todohealthcare.dto.commenResponse.exception.errorCode.CommonErrorCode;
-import com.healthcare.todohealthcare.dto.commenResponse.exception.exception.RestApiException;
-import com.healthcare.todohealthcare.dto.commenResponse.exception.response.ErrorResponse;
-import com.healthcare.todohealthcare.dto.commenResponse.exception.errorCode.ErrorCode;
+import com.healthcare.todohealthcare.exception.errorCode.CommonErrorCode;
+import com.healthcare.todohealthcare.exception.exception.RestApiException;
+import com.healthcare.todohealthcare.exception.response.ErrorResponse;
+import com.healthcare.todohealthcare.exception.errorCode.ErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

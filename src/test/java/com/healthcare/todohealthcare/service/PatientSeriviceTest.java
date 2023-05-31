@@ -1,13 +1,14 @@
 package com.healthcare.todohealthcare.service;
 
 import com.healthcare.todohealthcare.dto.*;
-import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
+import com.healthcare.todohealthcare.dto.search.PatientSearchCondition;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -106,8 +107,9 @@ class PatientSeriviceTest {
         patientSerivice.create(PatientD);
         patientSerivice.create(PatientE);
         // when
-        PatientSearchConditon searchConditon = new PatientSearchConditon(null, null, "1996-11-27");
-        FindAllPatientResponse result = patientSerivice.findAll(searchConditon);
+        PatientSearchCondition searchCondition = new PatientSearchCondition(null, null, "1996-11-27");
+        PageRequest pageRequest = PageRequest.of(0,3);
+        FindAllPatientResponse result = patientSerivice.findAll(searchCondition, pageRequest);
         // then
         assertThat(result.getPatients().size()).isEqualTo(3);
     }

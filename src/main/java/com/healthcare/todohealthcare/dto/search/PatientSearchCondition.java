@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PatientSearchConditon {
+public class PatientSearchCondition {
     private String name;
     private String registrationNo;
     private String birth;

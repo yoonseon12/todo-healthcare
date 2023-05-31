@@ -1,9 +1,13 @@
 package com.healthcare.todohealthcare.repository.custom;
 
-import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
+import com.healthcare.todohealthcare.dto.search.PatientSearchCondition;
 import com.healthcare.todohealthcare.entitiy.Patient;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -20,8 +24,8 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
     }
 
     @Override
-    public List<Patient> searchPatient(PatientSearchConditon condition) {
-        return queryFactory
+    public Page<Patient> searchPatient(PatientSearchCondition condition, Pageable pageable) {
+        QueryResults<Patient> results = queryFactory
                 .select(patient)
                 .from(patient)
                 .where(
@@ -29,7 +33,14 @@ public class PatientRepositoryImpl implements PatientRepositoryCustom {
                         registrationNoEq(condition.getRegistrationNo()),
                         birthEq(condition.getBirth())
                 )
-                .fetch();
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        List<Patient> content = results.getResults();
+        long totalCount = results.getTotal();
+
+        return new PageImpl<>(content, pageable, totalCount);
     }
 
     private BooleanExpression nameEq(String name) {

@@ -1,6 +1,6 @@
-package com.healthcare.todohealthcare.dto.commenResponse.exception.exception;
+package com.healthcare.todohealthcare.exception.exception;
 
-import com.healthcare.todohealthcare.dto.commenResponse.exception.errorCode.ErrorCode;
+import com.healthcare.todohealthcare.exception.errorCode.ErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

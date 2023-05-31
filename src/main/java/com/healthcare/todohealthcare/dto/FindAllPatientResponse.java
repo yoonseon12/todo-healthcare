@@ -3,6 +3,7 @@ package com.healthcare.todohealthcare.dto;
 
 import com.healthcare.todohealthcare.entitiy.Patient;
 import lombok.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public class FindAllPatientResponse {
     private List<FindAllPatientDTO> patients;
 
-    public static FindAllPatientResponse toDTO(List<Patient> patients) {
+    public static FindAllPatientResponse toDTO(Page<Patient> patients) {
         List<FindAllPatientDTO> list = patients.stream()
                 .map(p -> FindAllPatientDTO.toDTO(p)).
                 collect(Collectors.toList());

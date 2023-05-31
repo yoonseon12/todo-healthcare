@@ -2,9 +2,11 @@ package com.healthcare.todohealthcare.controller;
 
 import com.healthcare.todohealthcare.dto.*;
 import com.healthcare.todohealthcare.dto.commenResponse.CommonResponse;
-import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
+import com.healthcare.todohealthcare.dto.search.PatientSearchCondition;
 import com.healthcare.todohealthcare.service.PatientSerivice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +38,10 @@ public class PatientController {
     }
 
     @GetMapping
-    public CommonResponse<List<FindAllPatientResponse>> findAll(PatientSearchConditon searchConditon) {
-        return CommonResponse.of(patientSerivice.findAll(searchConditon));
+    public CommonResponse<List<FindAllPatientResponse>> findAll(@RequestParam(value="pageNo", defaultValue="1") int pageNo,
+                                                                @RequestParam(value="pageSize", defaultValue="10") int pageSize,
+                                                                PatientSearchCondition searchCondition) {
+        Pageable pageable = PageRequest.of(pageNo<1 ? 0 : pageNo-1, pageSize<1 ? 10 : pageSize);
+        return CommonResponse.of(patientSerivice.findAll(searchCondition, pageable));
     }
 }

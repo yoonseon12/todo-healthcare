@@ -1,12 +1,14 @@
 package com.healthcare.todohealthcare.service;
 
 import com.healthcare.todohealthcare.dto.*;
-import com.healthcare.todohealthcare.dto.search.PatientSearchConditon;
+import com.healthcare.todohealthcare.dto.search.PatientSearchCondition;
 import com.healthcare.todohealthcare.entitiy.Hospital;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import com.healthcare.todohealthcare.repository.HospitalRepository;
 import com.healthcare.todohealthcare.repository.PatientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,8 +69,8 @@ public class PatientSerivice {
         return FindPatientResponse.toDTO(findPatient);
     }
 
-    public FindAllPatientResponse findAll(PatientSearchConditon searchConditon) {
-        List<Patient> patients = patientRepository.searchPatient(searchConditon);
+    public FindAllPatientResponse findAll(PatientSearchCondition searchCondition, Pageable pageable) {
+        Page<Patient> patients = patientRepository.searchPatient(searchCondition, pageable);
         return FindAllPatientResponse.toDTO(patients);
     }
 }

@@ -1,6 +1,7 @@
 package com.healthcare.todohealthcare.dto;
 
 
+import com.healthcare.todohealthcare.dto.commenResponse.PageInfo;
 import com.healthcare.todohealthcare.entitiy.Patient;
 import lombok.*;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class FindAllPatientResponse {
+    private PageInfo pageInfo;
     private List<FindAllPatientDTO> patients;
 
     public static FindAllPatientResponse toDTO(Page<Patient> patients) {
@@ -21,6 +23,7 @@ public class FindAllPatientResponse {
                 collect(Collectors.toList());
 
         return FindAllPatientResponse.builder()
+                .pageInfo(PageInfo.toDTO(patients))
                 .patients(list)
                 .build();
     }

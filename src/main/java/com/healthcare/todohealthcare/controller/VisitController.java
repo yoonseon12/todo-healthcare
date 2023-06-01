@@ -28,7 +28,7 @@ public class VisitController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        visitService.delete(id);
+    public CommonResponse<DeleteVisitResponse> delete(@PathVariable Long id) {
+        return CommonResponse.of(visitService.delete(id));
     }
 }

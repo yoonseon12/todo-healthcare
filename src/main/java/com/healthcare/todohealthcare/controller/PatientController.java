@@ -28,8 +28,8 @@ public class PatientController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        patientSerivice.delete(id);
+    public CommonResponse<DeletePatientResponse> delete(@PathVariable Long id) {
+        return CommonResponse.of(patientSerivice.delete(id));
     }
 
     @GetMapping("/{id}")

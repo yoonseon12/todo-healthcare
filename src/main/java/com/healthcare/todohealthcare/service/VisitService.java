@@ -59,9 +59,12 @@ public class VisitService {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public DeleteVisitResponse delete(Long id) {
         Visit findVisit = visitRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 방문 정보가 없습니다."));
         visitRepository.delete(findVisit);
+        Visit deletedVisit = visitRepository.findDeletedVisitById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 방문 정보가 없습니다."));
+        return DeleteVisitResponse.toDTO(deletedVisit);
     }
 }

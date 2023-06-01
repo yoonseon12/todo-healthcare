@@ -57,10 +57,13 @@ public class PatientSerivice {
     }
 
     @Transactional
-    public void delete(Long id) {
+    public DeletePatientResponse delete(Long id) {
         Patient findPatient = patientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 환자 정보가 없습니다."));
         patientRepository.delete(findPatient);
+        Patient deletedPatient = patientRepository.findDeletedPatientById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 식별자의 환자 정보가 없습니다."));
+        return DeletePatientResponse.toDTO(deletedPatient);
     }
 
     public FindPatientResponse find(Long id) {
@@ -70,7 +73,7 @@ public class PatientSerivice {
     }
 
     public FindAllPatientResponse findAll(PatientSearchCondition searchCondition, Pageable pageable) {
-        Page<Patient> patients = patientRepository.searchPatient(searchCondition, pageable);
+        Page<Patient> patients = patientRepository.searchPatient(searchCondition, pageable);;
         return FindAllPatientResponse.toDTO(patients);
     }
 }

@@ -71,7 +71,7 @@ class PatientSeriviceTest {
         patientSerivice.delete(savedPatient.getId());
         // then
         Optional<Patient> deletedPatient = patientRepository.findById(savedPatient.getId());
-        assertTrue(deletedPatient.isEmpty());
+        assertThat(deletedPatient.get().getDeletedDate()).isNotNull();
     }
 
     @Test

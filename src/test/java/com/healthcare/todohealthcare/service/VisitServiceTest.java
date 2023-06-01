@@ -117,6 +117,6 @@ class VisitServiceTest {
         visitService.delete(savedVisit.getId());
         // then
         Optional<Visit> deletedPatient = visitRepository.findById(savedVisit.getId());
-        assertTrue(deletedPatient.isEmpty());
+        assertThat(deletedPatient.get().getDeletedDate()).isNotNull();
     }
 }

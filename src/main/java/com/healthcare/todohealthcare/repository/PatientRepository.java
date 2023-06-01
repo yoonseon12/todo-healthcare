@@ -16,4 +16,8 @@ public interface PatientRepository extends JpaRepository<Patient, Long>, Patient
 
     @Query("select p from Patient p join fetch p.hospital h left join fetch p.visits v where p.id = :id")
     Optional<Patient> findPatientWithHospitalWithVisitById(@Param("id") Long id);
+
+    //@Query(value="select p.id, p.deleted_date from Patient p where p.id = :id", nativeQuery=true)
+    @Query(value="SELECT P.* from PATIENT P WHERE P.ID = :id", nativeQuery=true)
+    Optional<Patient> findDeletedPatientById(@Param("id") Long id);
 }

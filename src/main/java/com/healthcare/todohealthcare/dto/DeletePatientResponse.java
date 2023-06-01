@@ -10,12 +10,11 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatePatientResponse {
+public class DeletePatientResponse {
     private Long id;
-    private LocalDateTime createdDate;
+    private LocalDateTime deletedDate;
 
-    public static CreatePatientResponse toDTO(Patient patient) {
-        return new CreatePatientResponse(patient.getId(), patient.getCreatedDate()) ;
+    public static DeletePatientResponse toDTO (Patient patient) {
+        return new DeletePatientResponse(patient.getId(), patient.getDeletedDate());
     }
-
 }

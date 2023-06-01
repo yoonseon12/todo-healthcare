@@ -23,9 +23,9 @@
 </details>
 
 <details>
-<summary>방문</summary>
+<summary>방문정보</summary>
 
-### 방문 도메인
+### 방문정보 도메인
 * 등록: 환자의 방문 정보를 등록하고 환자의 최근 방문일자를 수정합니다.
 * 수정: 환자의 방문 정보를 수정합니다.
 * 삭제: 환자의 밤문 정보가 삭제 처리되어 삭제일자가 update 됩니다.
@@ -41,8 +41,31 @@
 ---
 
 ## API Document
-**[공통 Response]**  
+**[공통 Response]**
+<details>
+<summary>공통 Response</summary>
 
+---
+* **Response :**  
+  `timestamp = [LocalDateTime] - 타임스탬프`  
+  `status = [int] - HTTP 정보`  
+  `code = [String] - HTTP 정보`  
+  `data = [] - Response 데이터`  
+
+
+* **Success Response:**
+```
+{
+    "timestamp": "2023-06-01T18:39:56.2844502",
+    "status": 200,
+    "code": "OK",
+    "data": {
+        ...
+    }
+}
+``` 
+---
+</details>
 
 **[환자]**
 <details>

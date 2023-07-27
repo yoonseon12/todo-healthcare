@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(of = "id")
 @Where(clause = "deleted_date is null")
 @SQLDelete(sql = "update visit set deleted_date = now() where id = ?")
 @DynamicUpdate

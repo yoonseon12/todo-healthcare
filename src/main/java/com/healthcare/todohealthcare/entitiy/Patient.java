@@ -16,8 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@EqualsAndHashCode
-@ToString(exclude = {"visits"})
+@EqualsAndHashCode(of = "id")
 @Where(clause = "deleted_date is null")
 @SQLDelete(sql = "update patient set deleted_date = now() where id = ?")
 @DynamicUpdate
@@ -29,7 +28,7 @@ public class Patient extends BaseEntity {
     @Comment("환자ID")
     private Long id;
 
-    @Column(name = "name", columnDefinition = "varchar", length = 45)
+    @Column(name = "name", columnDefinition = "varchar(234)")//, length = 45)
     @Comment("환자명")
     private String name;
 

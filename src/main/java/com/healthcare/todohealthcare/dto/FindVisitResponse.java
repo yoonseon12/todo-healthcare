@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Builder
 public class FindVisitResponse {
     private String visitStateCode;
